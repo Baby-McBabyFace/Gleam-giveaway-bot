@@ -68,7 +68,7 @@ class LocalStorage:
         return self.items().__str__()
 
 
-def init_driver(user_data_dir="", profile_dir="", headless=False): #No headless for debugging
+def init_driver(user_data_dir="", profile_dir="", headless=True): #No headless for debugging
     global driver, storage
 
     options = Options()

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import json
 import os
+import time
+import random
 
 from src import browser, giveaway, logger, reddit, scraper, twitter, utils
 
@@ -70,6 +72,7 @@ def main():
 
     # complete the giveaways
     for g in giveaways:
+        time.sleep(random.randint(10,20))
         print("\n")
         browser.get_url(g.url)
         print(f"Visited {g.url}")
