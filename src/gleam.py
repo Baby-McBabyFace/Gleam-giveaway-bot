@@ -7,6 +7,7 @@ from urllib.parse import parse_qs
 import colored
 from colored import stylize
 from selenium.common import exceptions
+from selenium.webdriver.common.by import By
 
 from src import twitter, browser, giveaway
 
