@@ -5,3 +5,4 @@ webdriver_manager==2.5.3
 colored==1.4.2
 tweepy==3.8.0
 beautifulsoup4==4.9.1
+undetected_chromedriver==3.1.6

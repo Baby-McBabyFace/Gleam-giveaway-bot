@@ -10,6 +10,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
+import undetected_chromedriver as uc
 
 driver: webdriver.Chrome = None
 storage = None
@@ -67,7 +68,7 @@ class LocalStorage:
         return self.items().__str__()
 
 
-def init_driver(user_data_dir="", profile_dir="", headless=True):
+def init_driver(user_data_dir="", profile_dir="", headless=False): #No headless for debugging
     global driver, storage
 
     options = Options()
@@ -92,7 +93,11 @@ def init_driver(user_data_dir="", profile_dir="", headless=True):
     caps = DesiredCapabilities().CHROME
     caps["pageLoadStrategy"] = "none"
 
-    driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options, desired_capabilities=caps)
+    #Original ChromeDriver
+    # driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options, desired_capabilities=caps)
+    
+    #Undetected-Chromedriver
+    driver = uc.Chrome(chrome_options=options, desired_capabilities=caps)
 
     storage = LocalStorage(driver)
 
@@ -158,7 +163,7 @@ def cleanup_tabs():
 
 def get_elem_by_css(selector):
     try:
-        elem = driver.find_element_by_css_selector(selector)
+        elem = driver.find_element(By.CSS_SELECTOR, selector)
     except exceptions.NoSuchElementException:
         return None
 
@@ -167,7 +172,7 @@ def get_elem_by_css(selector):
 
 def get_elems_by_css(selector):
     try:
-        elems = driver.find_elements_by_css_selector(selector)
+        elems = driver.find_elements(By.CSS_SELECTOR, selector)
     except exceptions.NoSuchElementException:
         return []
 
@@ -179,7 +184,7 @@ def wait_until_found(sel, timeout, display=True):
         element_present = EC.visibility_of_element_located((By.CSS_SELECTOR, sel))
         WebDriverWait(driver, timeout).until(element_present)
 
-        return driver.find_element_by_css_selector(sel)
+        return driver.find_element(By.CSS_SELECTOR, sel)
     except exceptions.TimeoutException:
         if display:
             print(f"Timeout waiting for element. ({sel})")

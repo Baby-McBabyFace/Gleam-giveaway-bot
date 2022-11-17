@@ -165,14 +165,14 @@ def complete_additional_details(giveaway_info, gleam_config):
             if 'terms_and_conditions' in detail_required and detail_required['terms_and_conditions'] and accept_tac:
                 # Terms and conditions checkbox
                 try:
-                    to_click = detail_elem.find_element_by_css_selector(".checkbox>.icon")
+                    to_click = detail_elem.find_element(By.CSS_SELECTOR, ".checkbox>.icon")
                 except exceptions.NoSuchElementException:
                     return False
 
             elif 'generated' in detail_required and detail_required['generated'] == 'minimum_age':
                 # Age checkbox
                 try:
-                    to_click = detail_elem.find_element_by_css_selector(".checkbox>.icon")
+                    to_click = detail_elem.find_element(By.CSS_SELECTOR, ".checkbox>.icon")
                 except exceptions.NoSuchElementException:
                     return False
             else:
@@ -187,12 +187,12 @@ def complete_additional_details(giveaway_info, gleam_config):
             # Date of birth
             enter_field = None
             try:
-                enter_field = detail_elem.find_element_by_css_selector("input[age-format]")
+                enter_field = detail_elem.find_element(By.CSS_SELECTOR, "input[age-format]")
             except exceptions.NoSuchElementException:
                 try:
-                    day_field = detail_elem.find_element_by_css_selector(".dob-input-field__day")
-                    month_field = detail_elem.find_element_by_css_selector(".dob-input-field__month")
-                    year_field = detail_elem.find_element_by_css_selector(".dob-input-field__year")
+                    day_field = detail_elem.find_element(By.CSS_SELECTOR, ".dob-input-field__day")
+                    month_field = detail_elem.find_element(By.CSS_SELECTOR, ".dob-input-field__month")
+                    year_field = detail_elem.find_element(By.CSS_SELECTOR, ".dob-input-field__year")
                 except exceptions.NoSuchElementException:
                     return False
 
@@ -409,7 +409,7 @@ def do_giveaway(info):
 def do_entry(entry_method_elem, entry_type, entry_id):
     if entry_type == 'twitter_follow':
         try:
-            tweet_btn = entry_method_elem.find_element_by_css_selector("div[class='expandable']>div>div>div>div>div>a")
+            tweet_btn = entry_method_elem.find_element(By.CSS_SELECTOR, "div[class='expandable']>div>div>div>div>div>a")
         except exceptions.NoSuchElementException:
             return
 
@@ -420,7 +420,7 @@ def do_entry(entry_method_elem, entry_type, entry_id):
 
     elif entry_type == 'twitter_retweet':
         try:
-            retweet_elem = entry_method_elem.find_element_by_css_selector(
+            retweet_elem = entry_method_elem.find_element(By.CSS_SELECTOR, 
                 "div[class='expandable']>div>div>div>div>div>twitter-widget")
         except exceptions.NoSuchElementException:
             return
@@ -431,7 +431,7 @@ def do_entry(entry_method_elem, entry_type, entry_id):
 
     elif entry_type == 'twitter_tweet':
         try:
-            tweet_elem = entry_method_elem.find_element_by_css_selector(
+            tweet_elem = entry_method_elem.find_element(By.CSS_SELECTOR, 
                 "div[class='expandable']>div>div>div>div>div>a[class*='twitter']")
         except exceptions.NoSuchElementException:
             return
@@ -448,8 +448,8 @@ def do_entry(entry_method_elem, entry_type, entry_id):
 
     elif entry_type == 'twitter_hashtags':
         try:
-            expandable_elem = entry_method_elem.find_element_by_css_selector("div[class='expandable']")
-            tweet_elem = expandable_elem.find_element_by_css_selector("a[class*='twitter']")
+            expandable_elem = entry_method_elem.find_element(By.CSS_SELECTOR, "div[class='expandable']")
+            tweet_elem = expandable_elem.find_element(By.CSS_SELECTOR, "a[class*='twitter']")
         except exceptions.NoSuchElementException:
             return
 
@@ -472,7 +472,7 @@ def do_entry(entry_method_elem, entry_type, entry_id):
         twitter.tweet(to_tweet)
 
         try:
-            already_tweeted_elem = expandable_elem.find_element_by_css_selector(
+            already_tweeted_elem = expandable_elem.find_element(By.CSS_SELECTOR, 
                 "div>div>div>div>a[ng-click^='saveEntry']")
 
             already_tweeted_elem.click()
@@ -487,7 +487,7 @@ def do_entry(entry_method_elem, entry_type, entry_id):
 
         # if there is a minimum time on the entry set another storage entry
         try:
-            timer_elem = entry_method_elem.find_element_by_css_selector("span[ng-hide^='!(isTimerAction']")
+            timer_elem = entry_method_elem.find_element(By.CSS_SELECTOR, "span[ng-hide^='!(isTimerAction']")
 
             if timer_elem.text.count("NaN") == 0 and timer_elem.text != "":
                 browser.storage[f"T-{entry_id}"] = f"{{\"c\":{millis},\"o\":{{\"expires\":1}},\"v\":{int(time.time() - 300)}}}"
@@ -498,8 +498,8 @@ def do_entry(entry_method_elem, entry_type, entry_id):
 
     elif entry_type == 'loyalty':
         try:
-            expandable_elem = entry_method_elem.find_element_by_css_selector("div[class='expandable']")
-            claim_elem = expandable_elem.find_element_by_css_selector("span[class='tally']")
+            expandable_elem = entry_method_elem.find_element(By.CSS_SELECTOR, "div[class='expandable']")
+            claim_elem = expandable_elem.find_element(By.CSS_SELECTOR, "span[class='tally']")
         except exceptions.NoSuchElementException:
             return
 
@@ -541,16 +541,16 @@ def wait_until_entry_loaded(entry_id):
 def get_continue_elem(parent_elem):
     # continue button
     try:
-        cont_btn = parent_elem.find_element_by_css_selector("div[class^='form-actions']>div>a")
+        cont_btn = parent_elem.find_element(By.CSS_SELECTOR, "div[class^='form-actions']>div>a")
     except exceptions.NoSuchElementException:
         try:
-            cont_btn = parent_elem.find_element_by_css_selector("div[class^='form-actions']>button")
+            cont_btn = parent_elem.find_element(By.CSS_SELECTOR, "div[class^='form-actions']>button")
         except exceptions.NoSuchElementException:
             try:
-                cont_btn = parent_elem.find_element_by_css_selector("div[class^='form-actions']>div")
+                cont_btn = parent_elem.find_element(By.CSS_SELECTOR, "div[class^='form-actions']>div")
             except exceptions.NoSuchElementException:
                 try:
-                    cont_btn = parent_elem.find_element_by_css_selector(
+                    cont_btn = parent_elem.find_element(By.CSS_SELECTOR, 
                         "div[class^='form-actions']>a[ng-click^='saveEntry']")
                 except exceptions.NoSuchElementException:
                     return None
