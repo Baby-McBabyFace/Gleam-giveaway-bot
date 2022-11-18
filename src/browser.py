@@ -71,7 +71,9 @@ class LocalStorage:
 def init_driver(user_data_dir="", profile_dir="", headless=True):
     global driver, storage
 
-    options = Options()
+    # options = Options()
+
+    options = uc.ChromeOptions()
 
     if headless:
         options.add_argument("--headless")
@@ -97,7 +99,7 @@ def init_driver(user_data_dir="", profile_dir="", headless=True):
     # driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options, desired_capabilities=caps)
     
     #Undetected-Chromedriver
-    driver = uc.Chrome(chrome_options=options, desired_capabilities=caps)
+    driver = uc.Chrome(options=options, desired_capabilities=caps)
 
     storage = LocalStorage(driver)
 
