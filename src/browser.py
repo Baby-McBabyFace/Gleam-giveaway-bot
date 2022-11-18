@@ -80,9 +80,10 @@ def init_driver(user_data_dir="", profile_dir="", headless=True):
 
         # disable image loading
         chrome_prefs = {}
-        options.experimental_options["prefs"] = chrome_prefs
+        # options.experimental_options["prefs"] = chrome_prefs
         chrome_prefs["profile.default_content_settings"] = {"images": 2}
         chrome_prefs["profile.managed_default_content_settings"] = {"images": 2}
+        options.experimental_options["prefs"] = chrome_prefs
 
     elif user_data_dir != "":
         options.add_argument(f"user-data-dir={user_data_dir}")
@@ -92,14 +93,16 @@ def init_driver(user_data_dir="", profile_dir="", headless=True):
     options.set_capability('unhandledPromptBehavior', 'dismiss')
 
     # Page load strategy none doesnt wait for the page to fully load before continuing
-    caps = DesiredCapabilities().CHROME
-    caps["pageLoadStrategy"] = "none"
+    # caps = DesiredCapabilities().CHROME
+    # caps["pageLoadStrategy"] = "none"
+    options.set_capability('pageLoadStrategy', 'none')
 
     #Original ChromeDriver
     # driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options, desired_capabilities=caps)
     
     #Undetected-Chromedriver
-    driver = uc.Chrome(options=options, desired_capabilities=caps)
+    # driver = uc.Chrome(options=options, desired_capabilities=caps)
+    driver = uc.Chrome(options=options)
 
     storage = LocalStorage(driver)
 
