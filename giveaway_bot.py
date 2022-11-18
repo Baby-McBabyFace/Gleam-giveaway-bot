@@ -63,7 +63,7 @@ def main():
     else:
         print("Not using twitter, no details given in the config")
 
-    browser.init_driver(config['user-data-dir'], config['profile-directory'], headless=True)
+    browser.init_driver(config['user-data-dir'], config['profile-directory'], headless=False)
 
     # load the cookies
     browser.apply_cookies("https://gleam.io/")

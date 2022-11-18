@@ -89,7 +89,7 @@ def init_driver(user_data_dir="", profile_dir="", headless=True):
         options.add_argument(f"user-data-dir={user_data_dir}")
         options.add_argument(f"profile-directory={profile_dir}")
 
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    # options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.set_capability('unhandledPromptBehavior', 'dismiss')
 
     # Page load strategy none doesnt wait for the page to fully load before continuing
@@ -101,7 +101,6 @@ def init_driver(user_data_dir="", profile_dir="", headless=True):
     # driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options, desired_capabilities=caps)
     
     #Undetected-Chromedriver
-    # driver = uc.Chrome(options=options, desired_capabilities=caps)
     driver = uc.Chrome(options=options)
 
     storage = LocalStorage(driver)
