@@ -101,7 +101,7 @@ def init_driver(user_data_dir="", profile_dir="", headless=True):
     # driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options, desired_capabilities=caps)
     
     #Undetected-Chromedriver
-    driver = uc.Chrome(options=options)
+    driver = uc.Chrome(options=options, version_main=109)
 
     storage = LocalStorage(driver)
 
