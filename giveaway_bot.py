@@ -25,14 +25,16 @@ def main():
         exit(0)
 
     # Get all the giveaway urls
-    utils.start_loading_text("Getting urls from https://reddit.com/r/giveaways/")
-    urls_reddit = reddit.get_urls()
+    # utils.start_loading_text("Getting urls from https://reddit.com/r/giveaways/")
+    # urls_reddit = reddit.get_urls()
 
-    urls = urls_reddit['gleam'].copy()
-    if config['do_playrgg_giveaways']:
-        urls.extend(urls_reddit['playrgg'])
+    # urls = urls_reddit['gleam'].copy()
+    # if config['do_playrgg_giveaways']:
+    #     urls.extend(urls_reddit['playrgg'])
 
-    utils.stop_loading_text(f"Got {len(urls)} urls from https://reddit.com/r/giveaways/")
+    # utils.stop_loading_text(f"Got {len(urls)} urls from https://reddit.com/r/giveaways/")
+
+    urls = []
 
     utils.start_loading_text("Getting urls from http://gleamlist.com")
     urls_gleamlist = scraper.get_urls_gleamlist()
